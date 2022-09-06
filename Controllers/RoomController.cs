@@ -23,12 +23,12 @@ namespace HogwartsPotions.Controllers
         }
 
         [HttpPost]
-        public async  Task AddRoom([FromBody] Room room)
+        public async Task AddRoom([FromBody] Room room)
         {
             await _context.AddRoom(room);
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("/{id:long}")]
         public async Task<Room> GetRoomById(long id)
         {
             return await _context.GetRoom(id);
@@ -37,10 +37,11 @@ namespace HogwartsPotions.Controllers
         [HttpPut("/{id}")]
         public void UpdateRoomById(long id, [FromBody] Room updatedRoom)
         {
-            _context.Update(updatedRoom);
+            updatedRoom.ID = id;
+            _context.UpdateRoom(updatedRoom);
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("/{id:long}")]
         public async Task DeleteRoomById(long id)
         {
             await _context.DeleteRoom(id);
