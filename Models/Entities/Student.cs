@@ -9,6 +9,7 @@ namespace HogwartsPotions.Models.Entities
         public long ID { get; set; }
 
         public string Name { get; set; }
+        public string Password { get; set; }
         public HouseType HouseType { get; set; }
         public PetType PetType { get; set; }
         
