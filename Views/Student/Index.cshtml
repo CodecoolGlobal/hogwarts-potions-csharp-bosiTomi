@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Http
+@using HogwartsPotions.Models.Enums
+@{
+    Layout = null;
+    string message = Context.Session.GetString("message");
+    Context.Session.Remove("message");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Registration</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/FormCSS.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+    <div>
+        <div id="login-form">
+            <form method="post" action="@Url.Action("ValidateLogin", "Student")">
+                <fieldset class="form-style-1">
+                    <label for="login-username">Username</label>
+                    <input type="text" name="login-username" id="login-username"class="form" size="20">
+                    <label for="login-password">Password</label>
+                    <input type="password" name="login-password" id="login-password" class="form" size="20">
+                    <br/><br/>
+                    <button type="submit" class="login-button">Login</button>
+                </fieldset>
+            </form>
+        <div style="text-align: center"><p style="display: inline-block">Not registered yet? Click <strong><a id="register">here</a></strong> to register now!</p></div>
+        </div>
+        <div id="register-form" hidden="hidden">
+            <form method="post" action="@Url.Action("Register", "Student")">
+                <fieldset class="form-style-1">
+                    <label for="register-username">Username</label>
+                    <input type="text" name="register-username" id="register-username" class="form" size="20">
+                    <label for="register-password">Password</label>
+                    <input type="password" name="register-password" id="register-password" class="form" size="20">
+
+                    <label for="register-houseType">House</label>
+                    <select for="register-houseType" name="register-houseType" class="form" id="register-houseType">
+                        @foreach (HouseType house in ViewBag.HouseTypes) {
+                            <option>@house</option>
+                        }
+                    </select>
+                    <span validation-for="register-houseType" class="text-danger"></span>
+
+                    <label for="register-petType">Pet</label>
+                    <select for="register-petType" name="register-petType" class="form" id="register-petType">
+                        @foreach (PetType pet in ViewBag.PetTypes) {
+                            <option>@pet</option>
+                        }
+                    </select>
+                    <span validation-for="register-petType" class="text-danger"></span>
+                    <br/><br/>
+                    <button type="submit" class="login-button">Register</button>
+                </fieldset>
+            </form>
+            <div style="text-align: center"><p style="display: inline-block">Already have any account? Click <strong><a id="login">here</a></strong> to log in now!</p></div>
+        </div>
+        @if (message != null)
+        {
+            Console.WriteLine("ok");
+            <div style="text-align: center"><h1 id="warning"><strong>@message</strong></h1></div>
+        }
+    </div>
+    <div style="text-align: center"><a style="display: inline-block" asp-action="Index" asp-controller="Potions">Go back to main page</a></div>
+</body>
+</html>
