@@ -23,6 +23,7 @@ namespace HogwartsPotions
             services.AddDbContext<HogwartsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -39,6 +40,7 @@ namespace HogwartsPotions
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -50,7 +52,7 @@ namespace HogwartsPotions
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Potion}/{action=Index}/{id?}");
+                    pattern: "{controller=Student}/{action=Index}/{Id?}");
             });
         }
     }
