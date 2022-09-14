@@ -7,8 +7,8 @@ namespace HogwartsPotions.Models.Entities;
 public class Ingredient
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long id { get; set; }
-    public string name { get; set; }
+    public long Id { get; set; }
+    public string Name { get; set; }
     [JsonIgnore]
     public HashSet<Potion> Potions { get; set; } = new();
     [JsonIgnore]
