@@ -9,9 +9,9 @@ namespace HogwartsPotions.Models.Entities
     public class Potion
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long id { get; set; }
+        public long Id { get; set; }
 
-        public string name { get; set; }
+        public string Name { get; set; }
         public Student Student { get; set; }
         public List<Ingredient> Ingredients { get; set; }
         public BrewingStatus BrewingStatus { get; set; }
