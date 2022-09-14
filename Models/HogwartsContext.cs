@@ -22,7 +22,6 @@ namespace HogwartsPotions.Models
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Potion> Potions { get; set; }
-
         public async Task AddRoom(Room room)
         {
             Rooms.Add(room);
@@ -42,7 +41,7 @@ namespace HogwartsPotions.Models
         public async Task UpdateRoom(Room room)
         {
             Rooms.Update(room);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public async Task DeleteRoom(long id)
@@ -51,7 +50,7 @@ namespace HogwartsPotions.Models
             if (roomToDelete != null)
             {
                 Rooms.Remove(roomToDelete);
-                SaveChangesAsync();
+                await SaveChangesAsync();
             }
         }
 
@@ -77,8 +76,8 @@ namespace HogwartsPotions.Models
 
         private bool CheckIngredients(List<Ingredient> ingredients1, List<Ingredient> ingredients2)
         {
-            return ingredients1.Select(ingredient => ingredient.name)
-                .All(ingredients2.Select(ingredient => ingredient.name).Contains);
+            return ingredients1.Select(ingredient => ingredient.Name)
+                .All(ingredients2.Select(ingredient => ingredient.Name).Contains);
         }
 
         private async Task<Recipe> FindRecipe(Potion potion)
@@ -91,13 +90,13 @@ namespace HogwartsPotions.Models
             List<Ingredient> ingredients = new List<Ingredient>();
             potion.Ingredients.ForEach(ingredient =>
             {
-                ingredients.Add(new Ingredient{name = ingredient.name});
+                ingredients.Add(new Ingredient{Name = ingredient.Name});
             });
             Recipe recipe = new Recipe()
             {
                 Ingredients = ingredients,
                 Student = potion.Student,
-                name = $"{potion.Student.Name}'s discovery #{discoveryCount}"
+                Name = $"{potion.Student.Name}'s discovery #{discoveryCount}"
             };
             Recipes.Add(recipe);
             await SaveChangesAsync();
@@ -138,18 +137,17 @@ namespace HogwartsPotions.Models
                 .ToListAsync();
         }
 
-        public async Task<Potion> CreateAPotion(Potion potion)
+        public async Task<Potion> CreateAPotion(Potion potion, Student student)
         {
-            Student student = await GetStudent(potion.Student.ID);
             potion.Student = student;
             if (potion.Ingredients.Count >= MaxIngredientsForPotions)
             {
                 potion.Recipe = await FindRecipe(potion);
-                potion.name = potion.Recipe.name;
+                potion.Name = potion.Recipe.Name;
             }
             else
             {
-                potion.name = $"{potion.Student.Name}'s potion";
+                potion.Name = $"{potion.Student.Name}'s potion";
             }
             await (_ = SetBrewingStatus(potion));
             Potions.Add(potion);
@@ -157,9 +155,9 @@ namespace HogwartsPotions.Models
             return potion;
         }
 
-        public async Task<Student> GetStudent(long studentID)
+        public async Task<Student> GetStudent(string username)
         {
-            return await Students.FirstOrDefaultAsync(student => student.ID == studentID);
+            return await Students.FirstOrDefaultAsync(student => student.Name == username);
         }
 
         public async Task<List<Potion>> GetPotionsOfAStudent(Student student)
@@ -167,9 +165,8 @@ namespace HogwartsPotions.Models
             return await Potions.Where(p => p.Student == student).ToListAsync();
         }
 
-        public async Task<Potion> FinishPotion(Potion potion)
+        public async Task<Potion> FinishPotion(Potion potion, Student student)
         {
-            Student student = await GetStudent(potion.Student.ID);
             potion.Student = student;
             potion.BrewingStatus = BrewingStatus.Brew;
             Potions.Add(potion);
@@ -179,13 +176,13 @@ namespace HogwartsPotions.Models
 
         public async Task<Potion> AddIngredient(Ingredient ingredient, long potionId)
         {
-            Potion potion = Potions.Include(potion => potion.Ingredients).Include(poti => poti.Student).First(p => p.id == potionId);
+            Potion potion = Potions.Include(potion => potion.Ingredients).Include(poti => poti.Student).First(p => p.Id == potionId);
             if (potion.Ingredients.Count >= MaxIngredientsForPotions)
             {
                 await SetBrewingStatus(potion);
                 return potion;
             }
-
+            
             Ingredients.Add(ingredient);
             await SaveChangesAsync();
             potion.Ingredients.Add(ingredient);
@@ -195,7 +192,7 @@ namespace HogwartsPotions.Models
             {
                 await SetBrewingStatus(potion);
                 potion.Recipe = await FindRecipe(potion);
-                potion.name = potion.Recipe.name + "potion";
+                potion.Name = potion.Recipe.Name + "potion";
                 Potions.Update(potion);
                 await SaveChangesAsync();
             }
@@ -205,10 +202,31 @@ namespace HogwartsPotions.Models
         public async Task<List<Recipe>> GetRecipes(long potionId)
         {
             Potion potion = await Potions.Include(potion => potion.Ingredients)
-                .FirstAsync(potion => potion.id == potionId);
+                .FirstAsync(potion => potion.Id == potionId);
             return Recipes.Include(recipe => recipe.Ingredients)
                 .Include(r => r.Student).AsEnumerable()
                 .Where(recipe => CheckIngredients(potion.Ingredients, recipe.Ingredients)).ToList();
+        }
+        public bool ValidateLogin(Student user)
+        {
+            return Students.Single(u => u.Name == user.Name && u.Password == user.Password).Name == user.Name;
+        }
+        private bool CheckRegistrationStatus(Student user)
+        {
+            var u = Students.FirstOrDefault(u => u.Name == user.Name);
+            return u == null;
+        }
+
+        public bool Register(Student user)
+        {
+            if (CheckRegistrationStatus(user))
+            {
+                Students.Add(user);
+                SaveChanges();
+                return true;
+            }
+
+            return false;
         }
     }
 }
