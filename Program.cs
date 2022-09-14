@@ -18,7 +18,7 @@ namespace HogwartsPotions
             host.Run();
         }
 
-        private static async void CreateDbIfNotExists(IHost host)
+        private static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -26,7 +26,7 @@ namespace HogwartsPotions
                 try
                 {
                     var context = services.GetRequiredService<HogwartsContext>();
-                      await DbInitializer.Initialize(context);
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
