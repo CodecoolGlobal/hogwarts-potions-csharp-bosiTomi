@@ -1,0 +1,51 @@
+﻿@using HogwartsPotions.Models.Entities
+@model IEnumerable<HogwartsPotions.Models.Entities.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewBag.Title = "Recipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Recipes</h1>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ingredients)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @item.Student.Name
+            </td>
+        @foreach (Ingredient ing in item.Ingredients)
+        {
+            <td>
+                @ing.Name
+            </td>
+        }
+        </tr>
+    }
+    <tr>
+        <td>
+            <a asp-controller="Potions" asp-action="Index">Back to Potions</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
