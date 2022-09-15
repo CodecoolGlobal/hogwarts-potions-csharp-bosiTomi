@@ -92,6 +92,7 @@ namespace HogwartsPotions.Models
             {
                 ingredients.Add(new Ingredient{Name = ingredient.Name});
             });
+            await (_ = SetBrewingStatus(potion));
             Recipe recipe = new Recipe()
             {
                 Ingredients = ingredients,
@@ -115,7 +116,7 @@ namespace HogwartsPotions.Models
             var recipes = await Recipes.Include(recipe => recipe.Ingredients).ToListAsync();
             foreach (var recipe in recipes)
             {
-                if (CheckIngredients(potion.Ingredients, potion.Recipe.Ingredients))
+                if (CheckIngredients(potion.Ingredients, recipe.Ingredients))
                 {
                     return recipe;
                 }
@@ -149,7 +150,6 @@ namespace HogwartsPotions.Models
             {
                 potion.Name = $"{potion.Student.Name}'s potion";
             }
-            await (_ = SetBrewingStatus(potion));
             Potions.Add(potion);
             await SaveChangesAsync();
             return potion;
@@ -207,6 +207,21 @@ namespace HogwartsPotions.Models
                 .Include(r => r.Student).AsEnumerable()
                 .Where(recipe => CheckIngredients(potion.Ingredients, recipe.Ingredients)).ToList();
         }
+
+        public List<Ingredient> GetIngredientlistByName(List<string> potionIngredients)
+        {
+            List<Ingredient> result = new List<Ingredient>();
+            foreach (var ingredient in potionIngredients)
+            {
+                result.Add(Ingredients.First(i => i.Name == ingredient));
+            }
+
+            return result;
+        }
+
+
+
+
         public bool ValidateLogin(Student user)
         {
             return Students.Single(u => u.Name == user.Name && u.Password == user.Password).Name == user.Name;
