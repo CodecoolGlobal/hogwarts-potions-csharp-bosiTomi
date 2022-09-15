@@ -1,4 +1,5 @@
 using System;
+using HogwartsPotions.data;
 using HogwartsPotions.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
