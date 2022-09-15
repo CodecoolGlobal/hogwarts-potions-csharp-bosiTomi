@@ -35,18 +35,22 @@ namespace HogwartsPotions.Controllers
             }
 
             var potion = await _context.Potions
+                .Include(p => p.Ingredients)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (potion == null)
             {
                 return NotFound();
             }
 
+            ViewBag.Ingredients = potion.Ingredients;
             return View(potion);
         }
 
         // GET: Potions/Create
         public IActionResult Create()
         {
+            ViewBag.Ingredients = new MultiSelectList(_context.Ingredients.ToList(),
+                "Name", "Name");
             ViewBag.Username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             return View();
         }
@@ -56,17 +60,27 @@ namespace HogwartsPotions.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Ingredients")] Potion potion)
+        public async Task<IActionResult> Create([Bind("Ingredients")] IngredientListView ingredientList)
         {
             var username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             var student = _context.GetStudent(username).Result;
+            var potion = new Potion()
+            {
+                Ingredients = _context.GetIngredientlistByName(ingredientList.Ingredients),
+                Recipe = new Recipe()
+                {
+                    Ingredients = _context.GetIngredientlistByName(ingredientList.Ingredients),
+                    Student = _context.GetStudent(username).Result
+                }
+            };
+            
             if (ModelState.IsValid)
             {
                 await _context.CreateAPotion(potion, student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(potion);
+            return View(ingredientList);
         }
 
         // GET: Potions/Edit/5
