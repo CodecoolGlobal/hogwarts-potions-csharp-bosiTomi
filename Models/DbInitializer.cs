@@ -54,8 +54,8 @@ namespace HogwartsPotions.data
 
 
             var ingredients = new Ingredient[]
-            {
-                new Ingredient {Name = "Abraxan hair"}, new Ingredient {Name = "Wolfsbane"}, new Ingredient {Name = "Acromantula venom"},
+{
+                new Ingredient {Name = "Abraxan hair"}, new Ingredient {Name = "Acromantula venom"},
                 new Ingredient {Name = "Adder's Fork"}, new Ingredient {Name = "African Red Pepper"}, new Ingredient {Name = "African Sea Salt"},
                 new Ingredient {Name = "Agrippa"}, new Ingredient {Name = "Alcohol"}, new Ingredient {Name = "Alihotsy"},
                 new Ingredient {Name = "Angel's Trumpet"}, new Ingredient {Name = "Anjelica"}, new Ingredient {Name = "Antimony"},
@@ -99,9 +99,62 @@ namespace HogwartsPotions.data
                 new Ingredient {Name = "Hemlock"}, new Ingredient {Name = "Herbaria"}, new Ingredient {Name = "Hermit crab shell"},
                 new Ingredient {Name = "Honey"}, new Ingredient {Name = "Honeywater"}, new Ingredient {Name = "Horklump juice"},
                 new Ingredient {Name = "Horned slug"}, new Ingredient {Name = "Horned toad"}, new Ingredient {Name = "Horse hair"},
-                new Ingredient {Name = "Horseradish"}, new Ingredient {Name = "Howlet's Wing"}, new Ingredient {Name = "Iguana blood"}
+                new Ingredient {Name = "Horseradish"}, new Ingredient {Name = "Howlet's Wing"}, new Ingredient {Name = "Iguana blood"},
+                new Ingredient {Name = "Infusion of Wormwood"},new Ingredient {Name = "Jewelweed"},new Ingredient {Name = "Jobberknoll feather"},
+                new Ingredient {Name = "Kelp"},new Ingredient {Name = "Knarl quills"},new Ingredient {Name = "Kneazle hair"},
+                new Ingredient {Name = "Knotgrass"},new Ingredient {Name = "Lacewing Fly"},new Ingredient {Name = "Lady's Mantle"},
+                new Ingredient {Name = "Lard"},new Ingredient {Name = "Lavender"},new Ingredient {Name = "Leech"},
+                new Ingredient {Name = "Leech Juice"},new Ingredient {Name = "Left handed nazle powder"},new Ingredient {Name = "Lethe River Water"},
+                new Ingredient {Name = "Lionfish"},new Ingredient {Name = "Lionfish Spine"},new Ingredient {Name = "Liver"},
+                new Ingredient {Name = "Lizard's Leg"},new Ingredient {Name = "Lobalug Venom"},new Ingredient {Name = "Lovage"},
+                new Ingredient {Name = "Mackled Malaclaw tail"},new Ingredient {Name = "Mallowsweet"},new Ingredient {Name = "Mandrake"},
+                new Ingredient {Name = "Mandrake, stewed"},new Ingredient {Name = "Mandrake Root"},new Ingredient {Name = "Maw"},
+                new Ingredient {Name = "Mercury and Mars"},new Ingredient {Name = "Mistletoe Berry"},new Ingredient {Name = "Mint"},
+                new Ingredient {Name = "Moly"},new Ingredient {Name = "Moondew"},new Ingredient {Name = "Moonseed"},
+                new Ingredient {Name = "Moonstone"},new Ingredient {Name = "Morning dew"},new Ingredient {Name = "Motherwort"},
+                new Ingredient {Name = "Murtlap tentacle"},new Ingredient {Name = "Mushroom"},new Ingredient {Name = "Nagini's venom"},
+                new Ingredient {Name = "Neem oil"},new Ingredient {Name = "Nettle"},new Ingredient {Name = "Newt"},
+                new Ingredient {Name = "Newt spleen"},new Ingredient {Name = "Niffler's Fancy"},new Ingredient {Name = "Nightshade"},
+                new Ingredient {Name = "Nux Myristica"},new Ingredient {Name = "Occamy egg"},new Ingredient {Name = "Octopus Powder"},
+                new Ingredient {Name = "Onion juice"},new Ingredient {Name = "Peacock feather"},new Ingredient {Name = "Pearl Dust"},
+                new Ingredient {Name = "Peppermint"},new Ingredient {Name = "Petroleum Jelly"},new Ingredient {Name = "Pickled Slugs"},
+                new Ingredient {Name = "Plangentine"},new Ingredient {Name = "Plantain"},new Ingredient {Name = "Poison ivy"},
+                new Ingredient {Name = "Polypody"},new Ingredient {Name = "Pomegranate juice"},new Ingredient {Name = "Pond Slime"},
+                new Ingredient {Name = "Poppy head"},new Ingredient {Name = "Powder of vipers-flesh"},new Ingredient {Name = "Porcupine quill"},
+                new Ingredient {Name = "Pritcher's Porritch"},new Ingredient {Name = "Ptolemy"},new Ingredient {Name = "Puffer-fish"},
+                new Ingredient {Name = "Puffer-fish Eyes"},new Ingredient {Name = "Puffskein hair"},new Ingredient {Name = "Pungous Onion"},
+                new Ingredient {Name = "Pus"},new Ingredient {Name = "Rat spleen"},new Ingredient {Name = "Rat tail"},
+                new Ingredient {Name = "Re'em blood"},new Ingredient {Name = "Rose"},new Ingredient {Name = "Rose Petals"},
+                new Ingredient {Name = "Rose thorn"},new Ingredient {Name = "Rose oil"},new Ingredient {Name = "Rotten egg"},
+                new Ingredient {Name = "Rue"},new Ingredient {Name = "Runespoor egg"},new Ingredient {Name = "Russian's Dragon Nails"},
+                new Ingredient {Name = "Sage"},new Ingredient {Name = "Sal Ammoniac"},new Ingredient {Name = "Salamander blood"},
+                new Ingredient {Name = "Salpeter"},new Ingredient {Name = "Salt"},new Ingredient {Name = "Saltpetre"},
+                new Ingredient {Name = "Salt water"},new Ingredient {Name = "Sardine"},new Ingredient {Name = "Scale of Dragon"},
+                new Ingredient {Name = "Scarab beetle"},new Ingredient {Name = "Scurvy grass"},new Ingredient {Name = "Shrake spine"},
+                new Ingredient {Name = "Shrivelfig"},new Ingredient {Name = "Silver"},new Ingredient {Name = "Silverweed"},
+                new Ingredient {Name = "Sloth brain"},new Ingredient {Name = "Snake fang"},new Ingredient {Name = "Snakeweed"},
+                new Ingredient {Name = "Sneezewort"},new Ingredient {Name = "Sopophorous bean"},new Ingredient {Name = "Sopophorous plant"},
+                new Ingredient {Name = "Spiders"},new Ingredient {Name = "Spirit of Myrrh"},new Ingredient {Name = "Spleenwart"},
+                new Ingredient {Name = "Squill"},new Ingredient {Name = "Squill bulb"},new Ingredient {Name = "St John's-wort"},
+                new Ingredient {Name = "Staghorn"},new Ingredient {Name = "Standard Ingredient"},new Ingredient {Name = "Star Grass"},
+                new Ingredient {Name = "Starthistle"},new Ingredient {Name = "Streeler shells"},new Ingredient {Name = "Sulphur Vive"},
+                new Ingredient {Name = "Syrup of Arnica"},new Ingredient {Name = "Syrup of Hellebore"},new Ingredient {Name = "Tar"},
+                new Ingredient {Name = "Thaumatagoria"},new Ingredient {Name = "Thyme"},new Ingredient {Name = "Tincture of Demiguise"},
+                new Ingredient {Name = "Toe of Frog"},new Ingredient {Name = "Tongue of Dog"},new Ingredient {Name = "Tooth of Wolf"},
+                new Ingredient {Name = "Tormentil"},new Ingredient {Name = "Tubeworm"},new Ingredient {Name = "Turtle Shell"},
+                new Ingredient {Name = "Unicorn Blood"},new Ingredient {Name = "Unicorn Hair"},new Ingredient {Name = "Unicorn Horn"},
+                new Ingredient {Name = "Urine"},new Ingredient {Name = "Valerian"},new Ingredient {Name = "Valerian root"},
+                new Ingredient {Name = "Venomous Tentacula"},new Ingredient {Name = "Venomous Tentacula leaf"},new Ingredient {Name = "Vervain"},
+                new Ingredient {Name = "Vervain infusion"},new Ingredient {Name = "Vinegar"},new Ingredient {Name = "Wartcap powder"},
+                new Ingredient {Name = "Wartizome"},new Ingredient {Name = "Water"},new Ingredient {Name = "White spirit"},
+                new Ingredient {Name = "White Wine"},new Ingredient {Name = "Wiggenbush"},new Ingredient {Name = "Wiggenbush bark"},
+                new Ingredient {Name = "Wiggentree"},new Ingredient {Name = "Wiggentree bark"},new Ingredient {Name = "Witch's Ganglion"},
+                new Ingredient {Name = "Witches' Mummy"}, new Ingredient {Name = "Wolfsbane"}, new Ingredient {Name = "Woodlice Extract 63"},
+                new Ingredient {Name = "Wood louse"}, new Ingredient {Name = "Wool of Bat"},new Ingredient {Name = "Wormwood"},
+                new Ingredient {Name = "Wormwood Essence"}
 
-            };
+
+};
 
             foreach (Ingredient ingredient in ingredients)
             {
@@ -111,16 +164,16 @@ namespace HogwartsPotions.data
             context.SaveChanges();
             var recipes = new Recipe[]
             {
-                new Recipe{Name = "Potions 1 recipe",Ingredients = new List<Ingredient> { ingredients[0],
+                new Recipe{Name = "Mageblood Potion's Recipe",Ingredients = new List<Ingredient> { ingredients[0],
                     ingredients[1],
                     ingredients[2],
                     ingredients[3],
-                    ingredients[4]}},
-                new Recipe{Name = "Potions 2 recipe",Ingredients = new List<Ingredient> {ingredients[5],
+                    ingredients[4]}, Student = students[0]},
+                new Recipe{Name = "Stoneskin Potion's Recipe",Ingredients = new List<Ingredient> {ingredients[5],
                     ingredients[6],
                     ingredients[7],
                     ingredients[8],
-                    ingredients[9]}}
+                    ingredients[9]}, Student = students[1]}
             };
 
 
@@ -139,12 +192,12 @@ namespace HogwartsPotions.data
                     ingredients[1],
                     ingredients[2],
                     ingredients[3],
-                    ingredients[4]}, BrewingStatus = BrewingStatus.Discovery,Recipe = context.Recipes.ToList()[0] , Name = "Potions 1"},
+                    ingredients[4]}, BrewingStatus = BrewingStatus.Discovery,Recipe = context.Recipes.ToList()[0] , Name = "Mageblood Potion"},
                 new Potion {Student = students[1],Ingredients = new List<Ingredient> { ingredients[0],
                     ingredients[1],
                     ingredients[2],
                     ingredients[3],
-                    ingredients[4]}, BrewingStatus = BrewingStatus.Discovery,Recipe = context.Recipes.ToList()[1], Name = "Potions 2"}
+                    ingredients[4]}, BrewingStatus = BrewingStatus.Discovery,Recipe = context.Recipes.ToList()[1], Name = "Stoneskin Potion"}
             };
 
             foreach (Potion potion in potions)
