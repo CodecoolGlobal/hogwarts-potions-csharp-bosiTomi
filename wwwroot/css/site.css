@@ -1,71 +1,328 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+@font-face {
+    font-family: potter;
+    src: url(../fonts/HARRP___.TTF);
+}
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+#login {
+    cursor: pointer;
+    color: aliceblue;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+#register {
+    cursor: pointer;
+    color: aliceblue;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+html, body {
+    margin: -3px;
+    height: 100%;
+    overflow: hidden;
+    background-color: black;
+    font-family: potter;
+}
+
+li {
+    float: left;
+}
+
+.register-select {
+    padding: 0;
+    padding-left: 1px;
+    border: none;
+    width: 10vw;
+    height: 35px;
+}
+
+option {
+    margin-left: -1px;
+    display: inline-block;
+    float: left;
+}
+
+ul {
+    width: 500px !important;
+}
+
+.background-container {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.welcome-button {
+    position: absolute;
+    margin-top: 500px;
+    text-decoration: none;
+    color: lightslategrey;
+}
+
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    color: antiquewhite;
+    font-family: potter;
+}
+
+.login-switch {
+    color: antiquewhite;
+}
+
+.create {
+    position: absolute;
+    top: 42%;
+    left: 24%;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.create-potion {
+    position: absolute;
+    top: 60%;
+    left: 72%;
+    font-size: 40px;
+    letter-spacing: 2px;
+    color: antiquewhite;
+    font-family: potter;
+    line-height: 39px !important;
+}
+
+.back-to-class {
+    position: absolute;
+    top: 24%;
+    left: 53%;
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: antiquewhite;
+    font-family: potter;
+}
+
+.recipes {
+    position: absolute;
+    top: 41%;
+    left: 60%;
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
+.potions {
+    position: absolute;
+    top: 24%;
+    left: 85%;
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
+.button-55 {
+    align-self: center;
+    background-color: transparent;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 2px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+    .button-55:hover {
+        box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+        transform: translate3d(0, 2px, 0);
+    }
+
+    .button-55:focus {
+        box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+    }
+
+input {
+    font-family: potter;
+}
+
+.login-button {
+    font-family: potter;
+    border-color: black;
+}
+
+.create-group {
+    position: absolute;
+    left: 29%;
+    right: 1%;
+    bottom: 0.5%;
+    height: -webkit-fill-available;
+    max-height: 85%;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    font-size: 15px;
+    font-family: potter;
+    width: 55vw;
+    letter-spacing: 1px;
+    margin-right: 20px;
+    font-size: 19px;
+}
+
+.potions-site {
+    margin: 6px;
+}
+
+.edit-site {
+    margin: 10px;
+}
+
+.delete-site {
+    margin: 6px;
+}
+
+.details-site {
+    margin: 6px;
+    margin-top: -13px;
+}
+
+.edit-h1 {
+    line-height: 2;
+}
+
+#ingredients {
+    display: none;
+}
+
+#ingredientsButton {
+    font-size: 35px;
+    color: antiquewhite;
+    font-family: potter;
+    top: 58%;
+    left: -7.5%;
+    position: absolute;
+}
+
+#searchBar {
+    position: absolute;
+    top: 9.8%;
+    left: 29%;
+    border-radius: 8px;
+    background: inherit;
+    border-color: antiquewhite;
+    color: antiquewhite;
+    letter-spacing: 1.5px;
+}
+
+.scrollable-table {
+    overflow-y: scroll;
+    height: 80%;
+}
+
+.sticky-footer {
+    height: 10%;
+    margin-left: 10px;
+}
+
+.alert-div {
+    width: 150px;
+    height: 70px;
+}
+
+#edit-input {
+    background-color: antiquewhite;
+    max-width: 60%;
+}
+
+#warning {
+    color: antiquewhite;
+    letter-spacing: 2px;
+}
+
+#recipe-backtoclass {
+    letter-spacing: 2px;
+    font-size: 22px;
+}
+
+#create-id {
+    letter-spacing: 1.3px;
+    font-size: 20px;
+}
+
+#details-row {
+    line-height: 30px;
+}
+
+#delete-h3 {
+    margin-bottom: 30px;
+}
+
+#delete-div {
+    line-height: 40px;
 }
