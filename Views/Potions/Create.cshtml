@@ -2,45 +2,55 @@
 
 @{
     ViewData["Title"] = "Create";
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!DOCTYPE html>
+<html>
 <head>
     <script src="~/lib/jquery/dist/jquery.min.js" ></script>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/css/form.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
-    <link rel="stylesheet" href="~/css/FormCSS.css"/>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
 </head>
-<h1></h1>
+<body>
+<div class="background-container" style="background-image: url(/images/alchemylab.jpg);">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group create-group">
+                    <label asp-for="Ingredients" class="control-label button-55" id="ingredientsButton" onclick="showIngredients()"></label>
+                    <div id="ingredients">
+                        <select asp-for="Ingredients" class="form-control create-group" multiple="multiple" style="background-image: url(/images/openbook.jpg);">
+                            @foreach (var ing in ViewBag.Ingredients)
+                            {
+                                <option value="@ing.Name">@ing.Name, </option>
+                            }
+                        </select>
+                        <input placeholder="Invito Ingredients" id="searchBar" type="text" onkeyup="SearchIngredient()" name="search">
+                    </div>
+                    
 
-<h4>Potion</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Ingredients" class="control-label"></label><br/>
-                <select asp-for="Ingredients" class="form-control" multiple="multiple" asp-items="@ViewBag.Ingredients" ></select>
-                <span asp-validation-for="Ingredients" class="text-danger"></span>
-            </div>
+                    <span asp-validation-for="Ingredients" class="text-danger"></span>
+                </div>
+                <div id="createDiv" class="create-potion alert-div" style="z-index:99999"; onclick="Alert()"></div>
+                <input id="create" disabled="disabled" type="submit" value="Create" class="create-potion button-55"/>
+            </form>
+        </div>
+    </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div>
+        <p class="back-to-class button-55">
+            <a asp-controller="Alchemy" asp-action="Index">Back to class</a>
+        </p>
+        
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</body>
+</html>
 <script type="text/javascript">
-
     $('option').mousedown(function(e) {
         e.preventDefault();
         if ($(this).prop('selected') === false) 
@@ -51,16 +61,23 @@
             }
         }
         var originalScrollTop = $(this).parent().scrollTop();
+        var createButton = document.getElementById("create");
         $(this).prop('selected', $(this).prop('selected') ? false : true);
         var self = this;
         $(this).parent().focus();
         setTimeout(function() {
             $(self).parent().scrollTop(originalScrollTop);
         }, 0);
-    
+        if($('select').val().length === 5) {
+            createButton.removeAttribute("disabled");
+            document.getElementById("createDiv").style.display = "none";
+            document.getElementById("createDiv").style.zIndex = -999;
+        }
+
         return false;
     });
 </script>
+
 @section Scripts {
 
    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
