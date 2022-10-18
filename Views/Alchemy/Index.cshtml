@@ -1,0 +1,32 @@
+﻿@model IEnumerable<HogwartsPotions.Models.Entities.Potion>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewBag.Title = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login/Registration</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/form.css" />
+    <link href="http://fonts.cdnfonts.com/css/harry-potter" rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+<div class="background-container" style="background-image: url(/images/classroom.jpg);">
+<p class="create button-55">
+    <a asp-controller="Potions" asp-action="Create">Brew A Potion</a>
+</p>
+<p class="recipes button-55">
+    <a asp-controller="Recipes" asp-action="Index">Recipes</a>
+</p>
+    <p class="potions button-55">
+        <a asp-controller="Potions" asp-action="Index">Potions</a>
+    </p>
+    </div>
+</body>
+</html>
