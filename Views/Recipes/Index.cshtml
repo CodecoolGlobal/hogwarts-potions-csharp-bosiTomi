@@ -7,45 +7,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Recipes</h1>
 
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Student)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ingredients)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @item.Student.Name
-            </td>
-        @foreach (Ingredient ing in item.Ingredients)
-        {
-            <td>
-                @ing.Name
-            </td>
-        }
-        </tr>
-    }
-    <tr>
-        <td>
-            <a asp-controller="Potions" asp-action="Index">Back to Potions</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js" ></script>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/form.css"/>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<div class="background-container" style="background-image: url(/images/openbook.jpg);">
+    <div class="scrollable-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Student)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ingredients)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @item.Student.Name
+                    </td>
+                    @foreach (Ingredient ing in item.Ingredients)
+                    {
+                        <td>
+                            @ing.Name
+                        </td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <footer class="sticky-footer">
+        <a asp-controller="Alchemy" asp-action="Index" id="recipe-backtoclass">Back to class</a>
+    </footer>
+</div>
+</html>
