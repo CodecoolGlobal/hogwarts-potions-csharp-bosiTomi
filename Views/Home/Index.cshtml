@@ -1,20 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Http
+@using HogwartsPotions.Models.Enums
 @{
+    Layout = null;
+    string message = Context.Session.GetString("message");
+    Context.Session.Remove("message");
 }
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="wIdth=device-wIdth" />
-    <meta charset="utf-8" http-equiv="content-type" content="text-html" />
-    <meta name="viewport" content="wIdth=device-wIdth, initial-scale=1.0" />
-    <title>Welcome to Hogwarts</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/welcome.css" />
+    <title>Login/Registration</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/form.css" />
+    <link rel="stylesheet" href="~/css/quote.css" />
+    <link rel="stylesheet" href="~/css/fire.css" />
+    <link rel="stylesheet" href="http://fonts.cdnfonts.com/css/harry-potter">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
 </head>
 <body>
-
+<div class="background-container" style="background-image: url(/images/door.jpg);">
+    <div class="quote-container">
+        <p class="quote fade-in"> There will be no foolish wand-waving or silly incantations in this class.<br/>
+            I don’t expect many of you to appreciate the subtle science and exact art that is potion-making. <br/>
+            However, for those select few… Who possess, the predisposition… <br/>
+            I can teach you how to bewitch the mind and ensnare the senses. <br/>
+            I can tell you how to bottle fame, brew glory, and even put a stopper in death.
+            <a class="welcome-button" asp-controller="Alchemy" asp-action="Index">Welcome To Hogwarts!</a>
+        </p>
+    </div>
+    @if (message != null)
+    {
+        Console.WriteLine("ok");
+        <div style="text-align: center">
+            <h1 id="warning"><strong>@message</strong></h1></div>
+    }
+</div>
 </body>
 </html>
