@@ -2,46 +2,60 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<p>
-    <a asp-controller="Recipes" asp-action="Index">Show all Recipes</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BrewingStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BrewingStatus)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-@*            <a asp-controller="Recipes" asp-action="Delete" asp-route-id="@item.Id">Recipe</a>
-*@        </td>
-    </tr>
-}
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js" ></script>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/form.css"/>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
+</head>
+<body>
+<div  class="background-container potions-site" style="background-image: url(/images/openbook.jpg);">
+    <p>
+        <a asp-action="Create" id="create-id">Create New</a>
+    </p>
+    <div class="scrollable-table">
+        <table class="table potions-table">
+            <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    BrewingStatus
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrewingStatus)
+                    </td>
+                    <td>
+                        <a asp-controller="Potions" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-controller="Potions" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-controller="Potions" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <footer class="sticky-footer">  
+        <a asp-controller="Alchemy" asp-action="Index" id="recipe-backtoclass">Back to class</a>
+    </footer>
+</div>
+</body>
+</html>
