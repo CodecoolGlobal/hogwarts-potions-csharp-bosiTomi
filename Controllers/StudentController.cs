@@ -31,14 +31,13 @@ namespace HogwartsPotions.Controllers
             if (_context.ValidateLogin(user))
             {
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
-                return RedirectToAction("Index", "Potions");
+                return RedirectToAction("Index", "Home");
             }
 
             var message = "Please enter the correct credentials!";
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
-
         public IActionResult Register()
         {
             string username = Request.Form["register-username"];
