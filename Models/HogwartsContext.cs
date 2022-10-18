@@ -83,22 +83,26 @@ namespace HogwartsPotions.Models
         private async Task<Recipe> FindRecipe(Potion potion)
         {
             var findRecipe = await GetReplica(potion);
-            if (findRecipe != null) return findRecipe;
-
             var discoveryCount = await DiscoveryCount(potion);
-
+            if (findRecipe != null)
+            {
+                await SetBrewingStatus(potion);
+                potion.Name = $"{potion.Student.Name}'s Replica #{discoveryCount}";
+                return findRecipe;
+            }
             List<Ingredient> ingredients = new List<Ingredient>();
             potion.Ingredients.ForEach(ingredient =>
             {
                 ingredients.Add(new Ingredient{Name = ingredient.Name});
             });
-            await (_ = SetBrewingStatus(potion));
+            await SetBrewingStatus(potion);
             Recipe recipe = new Recipe()
             {
                 Ingredients = ingredients,
                 Student = potion.Student,
-                Name = $"{potion.Student.Name}'s discovery #{discoveryCount}"
+                Name = $"{potion.Student.Name}'s Discovery #{discoveryCount}"
             };
+            potion.Name = recipe.Name;
             Recipes.Add(recipe);
             await SaveChangesAsync();
             return recipe;
@@ -144,7 +148,6 @@ namespace HogwartsPotions.Models
             if (potion.Ingredients.Count >= MaxIngredientsForPotions)
             {
                 potion.Recipe = await FindRecipe(potion);
-                potion.Name = potion.Recipe.Name;
             }
             else
             {
@@ -224,7 +227,7 @@ namespace HogwartsPotions.Models
 
         public bool ValidateLogin(Student user)
         {
-            return Students.Single(u => u.Name == user.Name && u.Password == user.Password).Name == user.Name;
+            return Students.Any(u => u.Name == user.Name && u.Password == user.Password);
         }
         private bool CheckRegistrationStatus(Student user)
         {
