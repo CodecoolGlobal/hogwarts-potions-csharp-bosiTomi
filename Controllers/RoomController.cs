@@ -11,7 +11,7 @@ namespace HogwartsPotions.Controllers
     {
         private readonly HogwartsContext _context;
 
-        public RoomController(HogwartsContext context)
+        public RoomController(HogwartsContext context) //TODO controller ne kapjon dbcontextet
         {
             _context = context;
         }
