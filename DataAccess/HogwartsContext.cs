@@ -14,7 +14,7 @@ namespace HogwartsPotions.Models
     {
         public const int MaxIngredientsForPotions = 5;
 
-        public HogwartsContext(DbContextOptions<HogwartsContext> options) : base(options) //TODO data access folder for dbinitializer and context pipa
+        public HogwartsContext(DbContextOptions<HogwartsContext> options) : base(options)
         {
         }
 
