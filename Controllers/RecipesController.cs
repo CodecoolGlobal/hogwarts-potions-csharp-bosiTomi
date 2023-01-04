@@ -15,7 +15,7 @@ namespace HogwartsPotions.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Recipes.Include(p => p.Ingredients).Include(m => m.Student).ToListAsync());
+            return View(await _context.Recipes.Include(p => p.Ingredients).Include(m => m.Student).ToListAsync()); //TODO servicebe szervezni
         }
     }
 }

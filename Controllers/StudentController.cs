@@ -19,28 +19,35 @@ namespace HogwartsPotions.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.HouseTypes = new HouseType[] { HouseType.Gryffindor, HouseType.Hufflepuff, HouseType.Ravenclaw, HouseType.Slytherin };
+            ViewBag.HouseTypes = new HouseType[] { HouseType.Gryffindor, HouseType.Hufflepuff, HouseType.Ravenclaw, HouseType.Slytherin }; //TODO viewmodel-t létrehozni viewbag helyett (enumból lekérni felsorolás helyett.)
             ViewBag.PetTypes = new PetType[] { PetType.Rat, PetType.Cat, PetType.None, PetType.Owl };
             return View();
         }
-        public IActionResult ValidateLogin()
+        public IActionResult ValidateLogin(string username, string password)
         {
-            string username = Request.Form["login-username"];
-            string password = Request.Form["login-password"];
-            Student user = new Student() { Name = username, Password = password };
-            if (_context.ValidateLogin(user))
+            var message = "Please enter the correct credentials!";
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                HttpContext.Session.SetString("message", message);
+                return RedirectToAction("Index");
+            }
+
+            LoginForm loginForm = new LoginForm() { Username = username, Password = password };
+
+            if (_context.ValidateLogin(loginForm))
             {
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
                 return RedirectToAction("Index", "Home");
             }
 
-            var message = "Please enter the correct credentials!";
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
+
         public IActionResult Register()
         {
-            string username = Request.Form["register-username"];
+            string username = Request.Form["register-username"]; //TODO parameteresen adni át a username / passwordot, létrehozni uj objektumot a register-formnak
             string password = Request.Form["register-password"];
             string houseType = Request.Form["register-houseType"];
             string petType = Request.Form["register-petType"];
