@@ -1,11 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using HogwartsPotions.DataAccess;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace HogwartsPotions.Models
 {
@@ -22,7 +23,7 @@ namespace HogwartsPotions.Models
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Potion> Potions { get; set; }
-        public async Task AddRoom(Room room)
+        public async Task AddRoom(Room room) //TODO room service class
         {
             Rooms.Add(room);
             await SaveChangesAsync();
@@ -61,7 +62,7 @@ namespace HogwartsPotions.Models
                 .ToListAsync();
         }
 
-        public async Task SetBrewingStatus(Potion potion)
+        public async Task SetBrewingStatus(Potion potion) //TODO potion service
         {
             if (potion.Ingredients.Count < MaxIngredientsForPotions)
                 potion.BrewingStatus = BrewingStatus.Brew;
@@ -222,23 +223,36 @@ namespace HogwartsPotions.Models
             return result;
         }
 
-
-
-
-        public bool ValidateLogin(Student user)
+        public bool ValidateLogin(LoginForm user)
         {
-            return Students.Any(u => u.Name == user.Name && u.Password == user.Password);
+            // Hash the entered password
+            string hashedPassword = PasswordHash.HashPassword(user.Password);
+
+            return Students.AsEnumerable().Any(u => u.Name == user.Username && FixedTimeEquals(u.Password, hashedPassword));
         }
-        private bool CheckRegistrationStatus(Student user)
+
+        private bool FixedTimeEquals(string str1, string str2)
         {
-            var u = Students.FirstOrDefault(u => u.Name == user.Name);
+            if (str1 == null || str2 == null)
+            {
+                return false;
+            }
+
+            return CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(str1), Encoding.UTF8.GetBytes(str2));
+        }
+
+
+        private bool CheckRegistrationStatus(string user)
+        {
+            var u = Students.FirstOrDefault(u => u.Name == user);
             return u == null;
         }
 
         public bool Register(Student user)
         {
-            if (CheckRegistrationStatus(user))
+            if (CheckRegistrationStatus(user.Name))
             {
+                user.Password = PasswordHash.HashPassword(user.Password);
                 Students.Add(user);
                 SaveChanges();
                 return true;

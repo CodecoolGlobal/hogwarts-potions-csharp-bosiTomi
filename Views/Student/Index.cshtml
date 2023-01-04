@@ -25,9 +25,9 @@
         <form method="post" action="@Url.Action("ValidateLogin", "Student")">
             <fieldset class="form-style-1" style="background-image: url(/images/pergamen.jpg);">
                 <label class="label-form" for="login-username">Username</label>
-                <input type="text" name="login-username" id="login-username"class="form" size="20">
+                <input type="text" name="username" id="login-username" class="form" size="20">
                 <label class="label-form" for="login-password">Password</label>
-                <input type="password" name="login-password" id="login-password" class="form" size="20">
+                <input type="password" name="password" id="login-password" class="form" size="20">
                 <br/><br/>
                 <button type="submit" class="login-button button-55">Login</button>
             </fieldset>
@@ -39,11 +39,11 @@
         <form method="post" action="@Url.Action("Register", "Student")">
             <fieldset class="form-style-1" style="background-image: url(/images/pergamen.jpg);">
                 <label class="label-form" for="register-username">Username</label>
-                <input type="text" name="register-username" id="register-username" class="form" size="20">
+                <input type="text" name="username" id="register-username" class="form" size="20">
                 <label class="label-form" for="register-password">Password</label>
-                <input type="password" name="register-password" id="register-password" class="form" size="20">
+                <input type="password" name="password" id="register-password" class="form" size="20">
                 <label class="label-form" for="register-houseType">House</label>
-                <select for="register-houseType" name="register-houseType" class="form register-select" id="register-houseType">
+                <select for="register-houseType" name="houseType" class="form register-select" id="register-houseType">
                     @foreach (HouseType house in ViewBag.HouseTypes)
                     {
                         <option>@house</option>
@@ -52,7 +52,7 @@
                 <span validation-for="register-houseType" class="text-danger"></span>
 
                 <label class="label-form" for="register-petType">Pet</label>
-                <select for="register-petType" name="register-petType" class="form register-select" id="register-petType">
+                <select for="register-petType" name="petType" class="form register-select" id="register-petType">
                     @foreach (PetType pet in ViewBag.PetTypes)
                     {
                         <option>@pet</option>
