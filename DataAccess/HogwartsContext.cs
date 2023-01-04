@@ -242,15 +242,15 @@ namespace HogwartsPotions.Models
         }
 
 
-        private bool CheckRegistrationStatus(Student user)
+        private bool CheckRegistrationStatus(string user)
         {
-            var u = Students.FirstOrDefault(u => u.Name == user.Name);
+            var u = Students.FirstOrDefault(u => u.Name == user);
             return u == null;
         }
 
         public bool Register(Student user)
         {
-            if (CheckRegistrationStatus(user))
+            if (CheckRegistrationStatus(user.Name))
             {
                 user.Password = PasswordHash.HashPassword(user.Password);
                 Students.Add(user);
