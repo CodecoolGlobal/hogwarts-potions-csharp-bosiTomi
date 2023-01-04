@@ -23,28 +23,36 @@ namespace HogwartsPotions.Controllers
             ViewBag.PetTypes = new PetType[] { PetType.Rat, PetType.Cat, PetType.None, PetType.Owl };
             return View();
         }
-        public IActionResult ValidateLogin()
+        public IActionResult ValidateLogin(string username, string password)
         {
-            string username = Request.Form["login-username"];
-            string password = Request.Form["login-password"];
-            Student user = new Student() { Name = username, Password = password };
-            if (_context.ValidateLogin(user))
+            var message = "Please enter the correct credentials!";
+
+            if (username == null || password == null)
+            {
+                HttpContext.Session.SetString("message", message);
+                return RedirectToAction("Index");
+            }
+
+            LoginForm loginForm = new LoginForm{ Username = username, Password = password };
+
+            if (_context.ValidateLogin(loginForm))
             {
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
                 return RedirectToAction("Index", "Home");
             }
 
-            var message = "Please enter the correct credentials!";
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
-        public IActionResult Register()
+        public IActionResult Register(RegisterForm registerForm)
         {
-            string username = Request.Form["register-username"];
-            string password = Request.Form["register-password"];
-            string houseType = Request.Form["register-houseType"];
-            string petType = Request.Form["register-petType"];
-            Student user = new Student() { Name = username, Password = password, HouseType = (HouseType)Enum.Parse(typeof(HouseType), houseType), PetType = (PetType)Enum.Parse(typeof(PetType), petType) };
+            Student user = new Student()
+            {
+                Name = registerForm.Username,
+                Password = registerForm.Password,
+                HouseType = registerForm.HouseType,
+                PetType = registerForm.PetType
+            };
             if (_context.Register(user))
             {
                 return RedirectToAction("Index", "Student");
