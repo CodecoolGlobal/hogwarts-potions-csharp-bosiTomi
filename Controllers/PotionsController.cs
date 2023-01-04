@@ -34,7 +34,7 @@ namespace HogwartsPotions.Controllers
                 return NotFound();
             }
 
-            var potion = await _context.Potions //TODO potion service-be kiszervezés (controller ne kapjon dbcontextet)
+            var potion = await _context.Potions
                 .Include(p => p.Ingredients)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (potion == null)
