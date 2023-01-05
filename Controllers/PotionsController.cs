@@ -1,42 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using HogwartsPotions.DataAccess;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HogwartsPotions.Models;
 using HogwartsPotions.Models.Entities;
+using HogwartsPotions.Service.Interface;
 using Microsoft.AspNetCore.Http;
 
 namespace HogwartsPotions.Controllers
 {
     public class PotionsController : Controller
     {
-        private readonly HogwartsContext _context;
+        private readonly IPotionService _potionService;
+        private readonly IIngredientService _ingredientService;
+        private readonly IStudentService _studentService;
 
-        public PotionsController(HogwartsContext context)
+        public PotionsController(IPotionService potionService, IIngredientService ingredientService, IStudentService studentService)
         {
-            _context = context;
+            _potionService = potionService;
+            _ingredientService = ingredientService;
+            _studentService = studentService;
         }
 
         // GET: Potions
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Potions.ToListAsync());
+              return View(await _potionService.GetAllPotions());
         }
 
         // GET: Potions/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.Potions == null)
+            if (id == null || await _potionService.GetAllPotions() == null)
             {
                 return NotFound();
             }
 
-            var potion = await _context.Potions
-                .Include(p => p.Ingredients)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var potion = await _potionService.GetPotion(id);
             if (potion == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace HogwartsPotions.Controllers
         // GET: Potions/Create
         public IActionResult Create()
         {
-            ViewBag.Ingredients = _context.Ingredients.ToList();
+            ViewBag.Ingredients = _ingredientService.GetAllIngredients().Result;
             //ViewBag.Ingredients = new MultiSelectList(_context.Ingredients.ToList(), "Name", "Name");
             ViewBag.Username = HttpContext.Session.GetString("username")?.Replace("\"", "");
             return View();
@@ -63,21 +63,20 @@ namespace HogwartsPotions.Controllers
         public async Task<IActionResult> Create([Bind("Ingredients")] IngredientListView ingredientList)
         {
             var username = HttpContext.Session.GetString("username")?.Replace("\"", "");
-            var student = _context.GetStudent(username).Result;
+            var student = _studentService.GetStudentByUsername(username).Result;
             var potion = new Potion()
             {
-                Ingredients = _context.GetIngredientlistByName(ingredientList.Ingredients),
+                Ingredients = _ingredientService.GetIngredientlistByName(ingredientList.Ingredients),
                 Recipe = new Recipe()
                 {
-                    Ingredients = _context.GetIngredientlistByName(ingredientList.Ingredients),
-                    Student = _context.GetStudent(username).Result
+                    Ingredients = _ingredientService.GetIngredientlistByName(ingredientList.Ingredients),
+                    Student = _studentService.GetStudentByUsername(username).Result
                 }
             };
             
             if (ModelState.IsValid)
             {
-                await _context.CreateAPotion(potion, student);
-                await _context.SaveChangesAsync();
+                await _potionService.CreateAPotion(potion, student);
                 return RedirectToAction(nameof(Index));
             }
             return View(ingredientList);
@@ -86,12 +85,12 @@ namespace HogwartsPotions.Controllers
         // GET: Potions/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.Potions == null)
+            if (id == null || await _potionService.GetAllPotions() == null)
             {
                 return NotFound();
             }
 
-            var potion = await _context.Potions.FindAsync(id);
+            var potion = await _potionService.GetPotion(id);
             if (potion == null)
             {
                 return NotFound();
@@ -115,8 +114,7 @@ namespace HogwartsPotions.Controllers
             {
                 try
                 {
-                    _context.Update(potion);
-                    await _context.SaveChangesAsync();
+                    _potionService.Update(potion);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,13 +135,12 @@ namespace HogwartsPotions.Controllers
         // GET: Potions/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.Potions == null)
+            if (id == null || await _potionService.GetAllPotions() == null)
             {
                 return NotFound();
             }
 
-            var potion = await _context.Potions
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var potion = await _potionService.GetPotion(id);
             if (potion == null)
             {
                 return NotFound();
@@ -157,23 +154,23 @@ namespace HogwartsPotions.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.Potions == null)
+            if (await _potionService.GetAllPotions() == null)
             {
                 return Problem("Entity set 'HogwartsContext.Potions'  is null.");
             }
-            var potion = await _context.Potions.FindAsync(id);
+            var potion = await _potionService.GetPotion(id);
             if (potion != null)
             {
-                _context.Potions.Remove(potion);
+                await _potionService.DeletePotion(potion.Id);
             }
-            
-            await _context.SaveChangesAsync();
+
+            _potionService.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PotionExists(long id)
         {
-          return _context.Potions.Any(e => e.Id == id);
+          return _potionService.GetAllPotions().Result.Any(p => p.Id == id);
         }
     }
 }
