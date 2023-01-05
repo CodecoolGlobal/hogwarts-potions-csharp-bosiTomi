@@ -1,6 +1,5 @@
 using System;
-using HogwartsPotions.data;
-using HogwartsPotions.Models;
+using HogwartsPotions.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HogwartsPotions.Models;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Models.Enums;
 
-namespace HogwartsPotions.data
+namespace HogwartsPotions.DataAccess
 {
     public static class DbInitializer
     {
