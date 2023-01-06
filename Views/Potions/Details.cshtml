@@ -3,19 +3,9 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="~/lib/jquery/dist/jquery.min.js" ></script>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
-    <link rel="stylesheet" href="~/css/form.css"/>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true" defer></script>
-</head>
-<body>
+
 <div class="background-container details-site" style="background-image: url(/images/openbook.jpg);">
     <h1 class="edit-h1">Details</h1>
 
@@ -50,4 +40,3 @@
     <a asp-action="Index" class="button-55 login-button">Back to List</a>
 </div>
 </div>
-</body>
