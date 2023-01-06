@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using HogwartsPotions.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HogwartsPotions.Models.Entities;
@@ -113,7 +112,7 @@ namespace HogwartsPotions.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                { 
                     _potionService.Update(potion);
                 }
                 catch (DbUpdateConcurrencyException)
