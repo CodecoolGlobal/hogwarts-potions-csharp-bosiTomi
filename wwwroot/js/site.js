@@ -60,4 +60,3 @@ registerButton.addEventListener('click', () => {
     registerForm.removeAttribute('hidden');
     warning.innerHTML = "";
 });
-

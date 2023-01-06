@@ -1,27 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http
-@using HogwartsPotions.Models.Enums
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
     string message = Context.Session.GetString("message");
     Context.Session.Remove("message");
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login/Registration</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/form.css" />
-    <link rel="stylesheet" href="~/css/quote.css" />
-    <link rel="stylesheet" href="~/css/fire.css" />
-    <link rel="stylesheet" href="http://fonts.cdnfonts.com/css/harry-potter">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true" defer></script>
-</head>
-<body>
+
 <div class="background-container" style="background-image: url(/images/door.jpg);">
     <div class="quote-container">
         <p class="quote fade-in"> There will be no foolish wand-waving or silly incantations in this class.<br/>
@@ -39,5 +22,3 @@
             <h1 id="warning"><strong>@message</strong></h1></div>
     }
 </div>
-</body>
-</html>
