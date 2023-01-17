@@ -44,7 +44,7 @@ public class RecipeService : IRecipeService
         if (findRecipe != null)
         {
             await SetBrewingStatus(potion);
-            potion.Name = $"{potion.Student.Name}'s Replica #{discoveryCount}";
+            potion.Name = $"{potion.Student.UserName}'s Replica #{discoveryCount}";
             return findRecipe;
         }
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -57,7 +57,7 @@ public class RecipeService : IRecipeService
         {
             Ingredients = ingredients,
             Student = potion.Student,
-            Name = $"{potion.Student.Name}'s Discovery #{discoveryCount}"
+            Name = $"{potion.Student.UserName}'s Discovery #{discoveryCount}"
         };
         potion.Name = recipe.Name;
         _context.Recipes.Add(recipe);

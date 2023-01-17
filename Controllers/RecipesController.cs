@@ -3,11 +3,13 @@ using HogwartsPotions.DataAccess;
 using HogwartsPotions.Models;
 using HogwartsPotions.Service;
 using HogwartsPotions.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HogwartsPotions.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class RecipesController : Controller
     {
         private readonly IRecipeService _recipeService;
