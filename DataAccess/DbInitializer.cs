@@ -2,6 +2,8 @@
 using System.Linq;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Models.Enums;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HogwartsPotions.DataAccess
 {
@@ -15,6 +17,19 @@ namespace HogwartsPotions.DataAccess
             if (context.Students.Any())
             {
                 return;   // DB has been seeded
+            }
+
+            var roleValidators = new List<IRoleValidator<IdentityRole>> { new RoleValidator<IdentityRole>() };
+            var roleManager = new RoleManager<IdentityRole>(
+                new RoleStore<IdentityRole>(context),
+                roleValidators,
+                new UpperInvariantLookupNormalizer(),
+                new IdentityErrorDescriber(),
+                null);
+
+            if (!roleManager.RoleExistsAsync("Student").Result)
+            {
+                roleManager.CreateAsync(new IdentityRole("Student"));
             }
 
             var rooms = new Room[]
