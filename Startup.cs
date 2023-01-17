@@ -1,5 +1,5 @@
+using System;
 using HogwartsPotions.DataAccess;
-using HogwartsPotions.Models;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Service;
 using HogwartsPotions.Service.Interface;
@@ -38,7 +38,15 @@ namespace HogwartsPotions
                     options.Password.RequireLowercase = false;
                 })
                 .AddEntityFrameworkStores<HogwartsContext>();
-            
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Student/Index";
+                options.AccessDeniedPath = "/Student/AccesDenied";
+                options.SlidingExpiration = true;
+            });
 
             services.AddSession();
             services.AddControllersWithViews();
