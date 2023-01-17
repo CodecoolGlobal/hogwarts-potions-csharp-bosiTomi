@@ -14,83 +14,84 @@ namespace HogwartsPotions.Service;
 public class StudentService : IStudentService
 {
     private readonly HogwartsContext _context;
-
+    
     public StudentService(HogwartsContext context)
     {
         _context = context;
     }
 
-    public async Task AddStudent(Student student)
-    {
-        _context.Students.Add(student);
-        await _context.SaveChangesAsync();
-    }
+    //public async Task AddStudent(Student student)
+    //{
+    //    _context.Students.Add(student);
+    //    await _context.SaveChangesAsync();
+    //}
 
-    public Task<Student> GetStudent(long studentId)
-    {
-        return _context.Students.FirstOrDefaultAsync(student => student.ID == studentId);
-    }
+    //public Task<Student> GetStudent(string studentId)
+    //{
+    //    return _context.Students.FirstOrDefaultAsync(student => student.Id == studentId);
+    //}
 
     public Task<Student> GetStudentByUsername(string username)
     {
-        return _context.Students.FirstOrDefaultAsync(student => student.Name == username);
+        return _context.Students.FirstOrDefaultAsync(student => student.UserName == username);
     }
 
-    public Task<List<Student>> GetAllStudents()
-    {
-        return _context.Students.ToListAsync();
-    }
+    //public Task<List<Student>> GetAllStudents()
+    //{
+    //    return _context.Students.ToListAsync();
+    //}
 
-    public async Task UpdateStudent(Student student)
-    {
-        _context.Students.Update(student);
-        await _context.SaveChangesAsync();
-    }
+    //public async Task UpdateStudent(Student student)
+    //{
+    //    _context.Students.Update(student);
+    //    await _context.SaveChangesAsync();
+    //}
 
-    public async Task DeleteStudent(long id)
-    {
-        var studentToDelete = await GetStudent(id);
-        if (studentToDelete != null)
-        {
-            _context.Students.Remove(studentToDelete);
-            await _context.SaveChangesAsync();
-        }
-    }
-    public bool ValidateLogin(LoginForm user)
-    {
-        // Hash the entered password
-        string hashedPassword = PasswordHash.HashPassword(user.Password);
+    //public async Task DeleteStudent(string id)
+    //{
+    //    var studentToDelete = await GetStudent(id);
+    //    if (studentToDelete != null)
+    //    {
+    //        _context.Students.Remove(studentToDelete);
+    //        await _context.SaveChangesAsync();
+    //    }
+    //}
 
-        return _context.Students.AsEnumerable().Any(u => u.Name == user.Username && FixedTimeEquals(u.Password, hashedPassword));
-    }
+    //public bool ValidateLogin(LoginForm user)
+    //{
+    //    // Hash the entered password
+    //    string hashedPassword = PasswordHash.HashPassword(user.Password);
 
-    private bool FixedTimeEquals(string str1, string str2)
-    {
-        if (str1 == null || str2 == null)
-        {
-            return false;
-        }
+    //    return _context.Students.AsEnumerable().Any(u => u.UserName == user.Username && FixedTimeEquals(u.Password, hashedPassword));
+    //}
 
-        return CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(str1), Encoding.UTF8.GetBytes(str2));
-    }
+    //private bool FixedTimeEquals(string str1, string str2)
+    //{
+    //    if (str1 == null || str2 == null)
+    //    {
+    //        return false;
+    //    }
+
+    //    return CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(str1), Encoding.UTF8.GetBytes(str2));
+    //}
 
 
-    private bool CheckRegistrationStatus(string user)
-    {
-        var u = _context.Students.FirstOrDefault(u => u.Name == user);
-        return u == null;
-    }
+    //private bool CheckRegistrationStatus(string user)
+    //{
+    //    var u = _context.Students.FirstOrDefault(u => u.UserName == user);
+    //    return u == null;
+    //}
 
-    public bool Register(Student user)
-    {
-        if (CheckRegistrationStatus(user.Name))
-        {
-            user.Password = PasswordHash.HashPassword(user.Password);
-            _context.Students.Add(user);
-            _context.SaveChanges();
-            return true;
-        }
+//    public bool Register(Student user)
+//    {
+//        if (CheckRegistrationStatus(user.UserName))
+//        {
+//            user.Password = PasswordHash.HashPassword(user.password);
+//            _context.Students.Add(user);
+//            _context.SaveChanges();
+//            return true;
+//        }
 
-        return false;
-    }
+//        return false;
+//    }
 }
