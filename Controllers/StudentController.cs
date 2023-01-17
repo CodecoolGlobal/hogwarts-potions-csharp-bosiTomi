@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using HogwartsPotions.DataAccess;
 using HogwartsPotions.Helpers;
 using HogwartsPotions.Models;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Models.Enums;
 using HogwartsPotions.Service.Interface;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HogwartsPotions.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly IStudentService _studentService;
-        public StudentController(IStudentService studentService)
+        private readonly UserManager<Student> _userManager;
+        private readonly SignInManager<Student> _signInManager;
+        public StudentController(UserManager<Student> userManager, SignInManager<Student> signInManager)
         {
-            _studentService = studentService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -25,7 +30,7 @@ namespace HogwartsPotions.Controllers
             ViewBag.PetTypes = new PetType[] { PetType.Rat, PetType.Cat, PetType.None, PetType.Owl };
             return View();
         }
-        public IActionResult ValidateLogin(string username, string password)
+        public async Task<IActionResult> ValidateLogin(string username, string password)
         {
             var message = "Please enter the correct credentials!";
 
@@ -37,36 +42,43 @@ namespace HogwartsPotions.Controllers
 
             LoginForm loginForm = new LoginForm{ Username = username, Password = password };
 
-            if (_studentService.ValidateLogin(loginForm))
+            await HttpContext.SignOutAsync("Identity.Application");
+            var result = await _signInManager.PasswordSignInAsync(loginForm.Username, loginForm.Password, isPersistent: true, lockoutOnFailure: false);
+            if (result.Succeeded)
             {
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "username", username);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "username", loginForm.Username);
                 return RedirectToAction("Index", "Home");
             }
 
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
-        public IActionResult Register(RegisterForm registerForm)
+        public async Task<IActionResult> Register(RegisterForm registerForm)
         {
             Student user = new Student()
             {
-                Name = registerForm.Username,
-                Password = registerForm.Password,
+                UserName = registerForm.Username,
                 HouseType = registerForm.HouseType,
                 PetType = registerForm.PetType
             };
-            if (_studentService.Register(user))
+            var result = await _userManager.CreateAsync(user, registerForm.Password);
+            if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Student");
             }
-            var message = "User already exists!";
+            var message = "";
+            foreach (var error in result.Errors)
+            {
+                message += error.Description;
+            }
             HttpContext.Session.SetString("message", message);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Remove("username");
+            await HttpContext.SignOutAsync("Identity.Application");
             return RedirectToAction("Index", "Student");
         }
     }
