@@ -1,5 +1,6 @@
 using HogwartsPotions.DataAccess;
 using HogwartsPotions.Models;
+using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Service;
 using HogwartsPotions.Service.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,19 @@ namespace HogwartsPotions
         {
             services.AddDbContext<HogwartsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<Student>
+                (options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddEntityFrameworkStores<HogwartsContext>();
+            
 
             services.AddSession();
             services.AddControllersWithViews();
@@ -55,6 +69,7 @@ namespace HogwartsPotions
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
