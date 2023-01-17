@@ -26,6 +26,11 @@ namespace HogwartsPotions.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Request.Cookies.ContainsKey(".AspNetCore.Identity.Application"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.HouseTypes = new HouseType[] { HouseType.Gryffindor, HouseType.Hufflepuff, HouseType.Ravenclaw, HouseType.Slytherin };
             ViewBag.PetTypes = new PetType[] { PetType.Rat, PetType.Cat, PetType.None, PetType.Owl };
             return View();
@@ -62,6 +67,10 @@ namespace HogwartsPotions.Controllers
                 PetType = registerForm.PetType
             };
             var result = await _userManager.CreateAsync(user, registerForm.Password);
+
+            Student student = await _userManager.FindByNameAsync(user.UserName);
+            await _userManager.AddToRoleAsync(student, "Student");
+
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Student");
