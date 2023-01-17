@@ -9,12 +9,6 @@ namespace HogwartsPotions.Models
         public HouseType HouseType { get; set; }
         public PetType PetType { get; set; }
         public RegisterForm() { }
-        public RegisterForm(string username, string password, HouseType houseType, PetType petType)
-        {
-            Username = username;
-            Password = password;
-            HouseType = houseType;
-            PetType = petType;
-        }
+        
     }
 }
