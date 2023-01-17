@@ -1,9 +1,11 @@
+using System;
 using HogwartsPotions.DataAccess;
-using HogwartsPotions.Models;
+using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Service;
 using HogwartsPotions.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +27,28 @@ namespace HogwartsPotions
         {
             services.AddDbContext<HogwartsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<Student>
+                (options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<HogwartsContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Student/Index";
+                options.AccessDeniedPath = "/Student/AccesDenied";
+                options.SlidingExpiration = true;
+            });
 
             services.AddSession();
             services.AddControllersWithViews();
@@ -55,6 +79,7 @@ namespace HogwartsPotions
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

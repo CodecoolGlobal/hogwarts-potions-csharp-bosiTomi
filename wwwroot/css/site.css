@@ -326,3 +326,11 @@ input {
 #delete-div {
     line-height: 40px;
 }
+
+.logout {
+    position: absolute;
+    top: 3%;
+    left: 1%;
+    letter-spacing: 3px;
+    font-size: 22px;
+}

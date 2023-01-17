@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HogwartsPotions.Models.Entities;
 using HogwartsPotions.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace HogwartsPotions.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class PotionsController : Controller
     {
         private readonly IPotionService _potionService;
