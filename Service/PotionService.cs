@@ -80,7 +80,7 @@ public class PotionService : IPotionService
         }
         else
         {
-            potion.Name = $"{potion.Student.Name}'s potion";
+            potion.Name = $"{potion.Student.UserName}'s potion";
         }
         _context.Potions.Add(potion);
         await _context.SaveChangesAsync();
